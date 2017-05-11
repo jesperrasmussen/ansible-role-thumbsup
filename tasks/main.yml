@@ -1,0 +1,23 @@
+---
+- name: add the ffmpeg PPA
+  apt_repository:
+    repo: 'ppa:jonathonf/ffmpeg-3'
+
+- name: install graphicsmagick and ffmpeg
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - graphicsmagick
+    - ffmpeg
+
+- name: Node.js | Add the node.js PPA
+  apt_repository: repo=ppa:chris-lea/node.js
+  tags: nodejs
+
+- name: Node.js | Install nodejs and npm
+  apt: pkg=nodejs update_cache=yes
+  tags: nodejs
+
+- name: Node.js | Install packages
+  command: npm install -g {{ item }}
+  with_items:
+    - thumbsup
